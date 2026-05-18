@@ -17,6 +17,7 @@ export default function Home() {
       setLoading(true);
 
       const params = new URLSearchParams();
+
       if (category) params.append("category", category);
       if (status) params.append("status", status);
       if (search) params.append("search", search);
@@ -45,6 +46,7 @@ export default function Home() {
             <h1 className="text-3xl font-bold text-gray-900">
               Mini Service Request Board
             </h1>
+
             <p className="mt-2 text-gray-600">
               Browse homeowner service requests and manage job status.
             </p>
@@ -52,7 +54,7 @@ export default function Home() {
 
           <Link
             href="/jobs/new"
-            className="rounded-xl bg-black px-5 py-3 text-center font-medium text-white hover:bg-gray-800"
+            className="rounded-xl bg-black px-5 py-3 text-center font-medium text-white transition hover:bg-gray-800"
           >
             + New Request
           </Link>
@@ -112,6 +114,7 @@ export default function Home() {
                   <span className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700">
                     {job.category}
                   </span>
+
                   <span className="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-700">
                     {job.status}
                   </span>
@@ -125,9 +128,27 @@ export default function Home() {
                   {job.description}
                 </p>
 
-                <p className="text-sm text-gray-500">
-                  📍 {job.location || "Location not provided"}
-                </p>
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 21s6-4.35 6-10a6 6 0 10-12 0c0 5.65 6 10 6 10z"
+                    />
+                    <circle cx="12" cy="11" r="2.5" />
+                  </svg>
+
+                  <span>
+                    {job.location || "Location not provided"}
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
