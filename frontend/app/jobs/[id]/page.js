@@ -13,6 +13,7 @@ export default function JobDetailPage() {
   const [job, setJob] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const fetchJob = async () => {
     try {
@@ -33,6 +34,8 @@ export default function JobDetailPage() {
 
   const updateStatus = async (status) => {
     try {
+      setError("");
+
       const res = await fetch(`${API_URL}/jobs/${id}`, {
         method: "PATCH",
         headers: {
@@ -54,13 +57,9 @@ export default function JobDetailPage() {
   };
 
   const deleteJob = async () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this job request?"
-    );
-
-    if (!confirmDelete) return;
-
     try {
+      setError("");
+
       const res = await fetch(`${API_URL}/jobs/${id}`, {
         method: "DELETE",
       });
@@ -84,7 +83,9 @@ export default function JobDetailPage() {
   if (loading) {
     return (
       <main className="min-h-screen bg-gray-100 px-6 py-8">
-        <p className="text-gray-600">Loading job details...</p>
+        <div className="mx-auto max-w-3xl rounded-2xl bg-white p-6 shadow">
+          <p className="text-gray-600">Loading job details...</p>
+        </div>
       </main>
     );
   }
@@ -164,13 +165,47 @@ export default function JobDetailPage() {
           </div>
 
           <button
-            onClick={deleteJob}
+            onClick={() => setShowDeleteModal(true)}
             className="mt-6 rounded-xl bg-red-600 px-5 py-3 font-medium text-white hover:bg-red-700"
           >
             Delete Request
           </button>
         </div>
       </div>
+
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+          <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Delete Request?
+            </h2>
+
+            <p className="mt-3 text-gray-600">
+              This action cannot be undone. Are you sure you want to delete this
+              service request?
+            </p>
+
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="rounded-xl border border-gray-300 px-5 py-3 font-medium text-gray-700 hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={async () => {
+                  setShowDeleteModal(false);
+                  await deleteJob();
+                }}
+                className="rounded-xl bg-red-600 px-5 py-3 font-medium text-white hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

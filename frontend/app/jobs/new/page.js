@@ -20,6 +20,9 @@ export default function NewJobPage() {
     contactEmail: "",
   });
 
+  const inputClass =
+    "rounded-xl border border-gray-300 bg-white p-4 text-gray-900 outline-none transition focus:border-black focus:ring-2 focus:ring-black/10";
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -64,22 +67,32 @@ export default function NewJobPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 px-6 py-8">
-      <div className="mx-auto max-w-3xl rounded-2xl bg-white p-6 shadow">
-        <div className="mb-6">
-          <Link href="/" className="text-sm text-blue-600 hover:underline">
+    <main className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-200 px-6 py-10">
+      <div className="mx-auto max-w-3xl rounded-3xl border border-gray-200 bg-white/90 p-8 shadow-2xl backdrop-blur">
+        <div className="mb-8">
+          <Link
+            href="/"
+            className="inline-flex items-center text-sm font-medium text-blue-600 hover:underline"
+          >
             ← Back to jobs
           </Link>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900">
-            Create New Service Request
-          </h1>
-          <p className="mt-2 text-gray-600">
-            Add a homeowner request for tradespeople to browse.
-          </p>
+
+          <div className="mt-6 rounded-2xl bg-gray-50 p-5">
+            <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">
+              Homeowner Request Form
+            </p>
+            <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-gray-900">
+              Create New Service Request
+            </h1>
+            <p className="mt-3 text-gray-600">
+              Add a clear service request so tradespeople can understand the
+              issue, location, and contact details quickly.
+            </p>
+          </div>
         </div>
 
         {error && (
-          <div className="mb-5 rounded-lg bg-red-100 p-3 text-red-700">
+          <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700">
             {error}
           </div>
         )}
@@ -89,60 +102,64 @@ export default function NewJobPage() {
             name="title"
             value={form.title}
             onChange={handleChange}
-            placeholder="Job title"
-            className="rounded-lg border border-gray-300 p-3 text-gray-900"
+            placeholder="Job title e.g. Leaking kitchen tap"
+            className={inputClass}
           />
 
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
-            placeholder="Describe the issue"
+            placeholder="Describe the issue in detail"
             rows="5"
-            className="rounded-lg border border-gray-300 p-3 text-gray-900"
+            className={inputClass}
           />
 
-          <select
-            name="category"
-            value={form.category}
-            onChange={handleChange}
-            className="rounded-lg border border-gray-300 p-3 text-gray-900"
-          >
-            <option value="Plumbing">Plumbing</option>
-            <option value="Electrical">Electrical</option>
-            <option value="Painting">Painting</option>
-            <option value="Joinery">Joinery</option>
-            <option value="Other">Other</option>
-          </select>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <select
+              name="category"
+              value={form.category}
+              onChange={handleChange}
+              className={inputClass}
+            >
+              <option value="Plumbing">Plumbing</option>
+              <option value="Electrical">Electrical</option>
+              <option value="Painting">Painting</option>
+              <option value="Joinery">Joinery</option>
+              <option value="Other">Other</option>
+            </select>
 
-          <input
-            name="location"
-            value={form.location}
-            onChange={handleChange}
-            placeholder="Location e.g. Glasgow"
-            className="rounded-lg border border-gray-300 p-3 text-gray-900"
-          />
+            <input
+              name="location"
+              value={form.location}
+              onChange={handleChange}
+              placeholder="Location e.g. Glasgow"
+              className={inputClass}
+            />
+          </div>
 
-          <input
-            name="contactName"
-            value={form.contactName}
-            onChange={handleChange}
-            placeholder="Contact name"
-            className="rounded-lg border border-gray-300 p-3 text-gray-900"
-          />
+          <div className="grid gap-5 sm:grid-cols-2">
+            <input
+              name="contactName"
+              value={form.contactName}
+              onChange={handleChange}
+              placeholder="Contact name"
+              className={inputClass}
+            />
 
-          <input
-            name="contactEmail"
-            value={form.contactEmail}
-            onChange={handleChange}
-            placeholder="Contact email"
-            className="rounded-lg border border-gray-300 p-3 text-gray-900"
-          />
+            <input
+              name="contactEmail"
+              value={form.contactEmail}
+              onChange={handleChange}
+              placeholder="Contact email"
+              className={inputClass}
+            />
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="rounded-xl bg-black px-5 py-3 font-medium text-white hover:bg-gray-800 disabled:bg-gray-400"
+            className="rounded-2xl bg-black px-5 py-4 text-lg font-semibold text-white transition hover:scale-[1.01] hover:bg-gray-800 disabled:bg-gray-400"
           >
             {loading ? "Creating..." : "Create Request"}
           </button>
